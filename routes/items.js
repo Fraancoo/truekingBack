@@ -12,6 +12,30 @@ router.get('/',(req, res)=>{
     })
 });
 
+//Get items by name
+router.get('/name/:name',(req, res)=>{
+    const {name} = req.params
+    let Name = '%'.concat(name.concat('%'));
+    let sql = `SELECT * FROM items WHERE name LIKE ?`
+    conexion.query(sql,[Name],(err, rows, fields)=>{
+        if(err) throw err;
+        else{
+            res.json(rows)
+        }
+    })
+});
+
+//Get tags
+router.get('/tags',(req, res)=>{
+    let sql ='SELECT * FROM tags'
+    conexion.query(sql,(err, rows, fields)=>{
+        if(err) throw err;
+        else{
+            res.json(rows)
+        }
+    })
+});
+
 //Get one item
 router.get('/:id',(req, res)=>{
     const {id} = req.params
